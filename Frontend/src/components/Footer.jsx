@@ -45,11 +45,11 @@ export const Footer = () => {
               fontSize: '1.05rem',
               color: 'var(--text-primary)'
             }}>
-              Loan Default Prediction System
+              FinRisk AI — Loan Default System
             </span>
           </div>
           <p style={{ lineHeight: 1.6, color: 'var(--text-muted)', marginBottom: '14px', fontSize: '0.86rem' }}>
-            Machine learning platform engineered for institutional loan default risk assessment, powered by supervised classification rules.
+            Machine learning platform engineered for institutional loan default risk assessment, powered by supervised Decision Tree classification rules.
           </p>
           <div style={{
             display: 'inline-flex',
@@ -102,7 +102,7 @@ export const Footer = () => {
             </li>
             <li>
               <Link to="/about-model" style={{ color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}>
-                Decision Tree ML Specifications
+                About ML Model
               </Link>
             </li>
           </ul>
@@ -122,15 +122,15 @@ export const Footer = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.85rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '6px' }}>
               <span>Algorithm</span>
-              <strong style={{ color: 'var(--text-primary)' }}>Decision Tree</strong>
+              <strong style={{ color: 'var(--text-primary)' }}>DecisionTreeClassifier</strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '6px' }}>
-              <span>Test Accuracy</span>
-              <strong style={{ color: 'var(--cyan-light)' }}>80.16%</strong>
+              <span>Primary Model</span>
+              <strong style={{ color: 'var(--cyan-light)' }}>Decision Tree</strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '6px' }}>
-              <span>5-Fold CV Mean F1</span>
-              <strong style={{ color: '#10B981' }}>21.14%</strong>
+              <span>Validation</span>
+              <strong style={{ color: '#10B981' }}>5-Fold Stratified CV</strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '6px' }}>
               <span>Dataset Size</span>
@@ -151,7 +151,7 @@ export const Footer = () => {
             Architecture Layer
           </h4>
           <p style={{ lineHeight: 1.6, color: 'var(--text-muted)', marginBottom: '12px', fontSize: '0.83rem' }}>
-            Decoupled frontend with a pluggable service layer. Supports direct connection to external RESTful ML inference services via configurable environment variables.
+            Decoupled frontend with FastAPI microservice backend. Evaluates 16 applicant features with domain feature engineering.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-dim)', fontSize: '0.78rem' }}>
             <Database size={14} />
@@ -175,7 +175,7 @@ export const Footer = () => {
       }}>
         <Shield size={20} color="#F59E0B" style={{ flexShrink: 0, marginTop: '2px' }} />
         <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.82rem', lineHeight: 1.5 }}>
-          <strong style={{ color: '#F59E0B' }}>Official Project Disclaimer:</strong> This application is an educational machine-learning project designed for loan default risk prediction. Predictions should be treated as decision-support information and not as the sole basis for financial decisions.
+          <strong style={{ color: '#F59E0B' }}>Official Project Disclaimer:</strong> This application is an educational machine-learning demonstration project for loan default risk prediction. Predictions are probability estimates and should not be used as the sole basis for financial or lending decisions.
         </p>
       </div>
 
@@ -194,14 +194,14 @@ export const Footer = () => {
         paddingTop: '18px'
       }}>
         <div>
-          Loan Default Prediction System © {new Date().getFullYear()}. All Rights Reserved.
+          FinRisk AI — Loan Default Prediction System © {new Date().getFullYear()}. All Rights Reserved.
         </div>
         <div style={{ display: 'flex', gap: '16px' }}>
           <span>Supervised ML: Decision Tree Classifier</span>
           <span>•</span>
           <span>16 Input Features</span>
           <span>•</span>
-          <span>Capstone Release</span>
+          <span>Academic Demonstration</span>
         </div>
       </div>
     </footer>

@@ -6,7 +6,7 @@ const DEFAULT_CONFIG = {
   predictEndpoint: '/predict',
   healthEndpoint: '/health',
   historyEndpoint: '/history',
-  timeoutMs: 12000,
+  timeoutMs: 120000,
   simulationMode: false // Developer preview when backend is not yet started
 };
 
@@ -33,7 +33,7 @@ export const resetApiConfig = () => {
 export const testBackendConnection = async (baseUrl) => {
   const targetUrl = (baseUrl || getApiConfig().baseUrl).replace(/\/+$/, '');
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 4000);
+  const timeoutId = setTimeout(() => controller.abort(), 120000);
 
   try {
     const response = await fetch(`${targetUrl}/health`, {
@@ -51,7 +51,7 @@ export const testBackendConnection = async (baseUrl) => {
     clearTimeout(timeoutId);
     try {
       const fallbackController = new AbortController();
-      const fbTimeout = setTimeout(() => fallbackController.abort(), 2000);
+      const fbTimeout = setTimeout(() => fallbackController.abort(), 120000);
       const rootRes = await fetch(`${targetUrl}/`, {
         method: 'GET',
         signal: fallbackController.signal

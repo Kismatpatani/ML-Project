@@ -21,7 +21,7 @@ export const Home = () => {
     { title: 'Dataset Records', value: '255K+', subtitle: '255,347 evaluated records', icon: Database, color: 'cyan', badge: 'High-Volume' },
     { title: 'Prediction Features', value: '16', subtitle: 'Demographic & financial inputs', icon: Layers, color: 'primary', badge: 'Multi-Factor' },
     { title: 'ML Model', value: 'Decision Tree', subtitle: 'Supervised rule-based classifier', icon: GitBranch, color: 'success', badge: 'Selected' },
-    { title: 'Cross Validation', value: '5-Fold', subtitle: 'Mean F1: 21.14% under imbalance', icon: Activity, color: 'warning', badge: 'Robust' }
+    { title: 'Cross-Validation', value: '5-Fold', subtitle: 'Stratified cross-validation', icon: Activity, color: 'warning', badge: 'CV F1' }
   ];
 
   const steps = [
@@ -55,7 +55,7 @@ export const Home = () => {
     { title: 'Applicant Analysis', desc: 'Granular assessment of demographic profiles to ensure comprehensive borrower underwriting.', icon: UserCheck },
     { title: 'Financial Profile', desc: 'Precise financial ratio evaluation including debt burden and income solvency indicators.', icon: CreditCard },
     { title: 'Loan Risk Assessment', desc: 'Multivariate examination of tenure, principal exposure, and associated interest terms.', icon: TrendingUp },
-    { title: 'ML-Based Prediction', desc: 'Transparent rule-based classification using a trained Decision Tree Classifier.', icon: GitBranch },
+    { title: 'ML-Based Prediction', desc: 'Transparent rule-based classification using an optimized Decision Tree Classifier.', icon: GitBranch },
     { title: 'Prediction History', desc: 'Auditable registry of all performed evaluations with full parameter tracking.', icon: FileText },
     { title: 'Interactive Dashboard', desc: 'Visual institutional dashboards monitoring portfolio risk and assessment metrics.', icon: PieChart }
   ];
@@ -81,7 +81,7 @@ export const Home = () => {
             fontFamily: 'var(--font-heading)',
             fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
             fontWeight: 800,
-            color: '#FFFFFF',
+            color: 'var(--text-primary)',
             lineHeight: 1.12,
             letterSpacing: '-0.03em',
             marginBottom: '18px'
@@ -97,7 +97,7 @@ export const Home = () => {
           </h1>
 
           <p style={{
-            color: '#CBD5E1',
+            color: 'var(--text-muted)',
             fontSize: '1.15rem',
             lineHeight: 1.6,
             maxWidth: '560px',
@@ -118,7 +118,7 @@ export const Home = () => {
             </Link>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '36px', color: '#94A3B8', fontSize: '0.84rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '36px', color: 'var(--text-muted)', fontSize: '0.84rem', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle size={15} color="#10B981" />
               <span>Decision Tree Classifier</span>
@@ -129,14 +129,13 @@ export const Home = () => {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle size={15} color="#10B981" />
-              <span>80.16% Test Accuracy</span>
+              <span>Stratified Evaluation</span>
             </div>
           </div>
         </div>
 
         {/* Visual Financial/AI Graphic Card */}
         <div style={{ position: 'relative' }}>
-          {/* Subtle background glow */}
           <div style={{
             position: 'absolute',
             inset: '-10px',
@@ -149,11 +148,10 @@ export const Home = () => {
             position: 'relative',
             zIndex: 1,
             padding: '28px',
-            border: '1px solid rgba(99, 102, 241, 0.35)',
-            background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 17, 32, 0.95) 100%)'
+            border: '1px solid var(--border-primary)'
           }}>
             {/* Header of AI Card */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{
                   width: '32px',
@@ -167,10 +165,10 @@ export const Home = () => {
                   <GitBranch size={18} color="#818CF8" />
                 </div>
                 <div>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: '#FFFFFF', fontSize: '0.92rem' }}>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.92rem' }}>
                     Decision Tree Inference Engine
                   </div>
-                  <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                     Supervised Classification Pipeline
                   </div>
                 </div>
@@ -178,45 +176,45 @@ export const Home = () => {
               <span className="badge-model">Production ML</span>
             </div>
 
-            {/* Simulated Live Assessment Preview Box */}
+            {/* Assessment Preview Box */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
               <div style={{
                 padding: '12px 14px',
                 borderRadius: '10px',
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
+                background: 'var(--bg-segmented)',
+                border: '1px solid var(--border-subtle)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}>
-                <span style={{ fontSize: '0.82rem', color: '#94A3B8' }}>Input Feature Vector</span>
-                <span style={{ fontSize: '0.82rem', color: '#38BDF8', fontWeight: 600 }}>16 Standardized Inputs</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Input Feature Vector</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>16 Standardized Inputs</span>
               </div>
 
               <div style={{
                 padding: '12px 14px',
                 borderRadius: '10px',
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
+                background: 'var(--bg-segmented)',
+                border: '1px solid var(--border-subtle)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}>
-                <span style={{ fontSize: '0.82rem', color: '#94A3B8' }}>Evaluation Metric (CV Mean F1)</span>
-                <span style={{ fontSize: '0.82rem', color: '#34D399', fontWeight: 700 }}>21.14%</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Evaluation Strategy</span>
+                <span style={{ fontSize: '0.82rem', color: '#34D399', fontWeight: 700 }}>5-Fold Stratified CV</span>
               </div>
 
               <div style={{
                 padding: '12px 14px',
                 borderRadius: '10px',
-                background: 'rgba(16, 185, 129, 0.08)',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
+                background: 'var(--success-bg)',
+                border: '1px solid var(--success-border)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}>
                 <div>
-                  <div style={{ fontSize: '0.76rem', color: '#94A3B8', textTransform: 'uppercase' }}>Target Output</div>
+                  <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Target Output</div>
                   <div style={{ fontWeight: 700, color: '#34D399', fontSize: '0.95rem' }}>Default (0 / 1)</div>
                 </div>
                 <div className="badge-nodefault">
@@ -230,13 +228,13 @@ export const Home = () => {
             <div style={{
               padding: '14px',
               borderRadius: '10px',
-              background: 'rgba(0, 0, 0, 0.35)',
-              border: '1px dashed rgba(255, 255, 255, 0.1)',
+              background: 'var(--bg-segmented)',
+              border: '1px dashed var(--border-subtle)',
               fontSize: '0.78rem',
-              color: '#CBD5E1',
+              color: 'var(--text-secondary)',
               lineHeight: 1.6
             }}>
-              <span style={{ color: '#818CF8', fontWeight: 600 }}>Algorithm Principle:</span> Splits dataset recursively based on learned threshold conditions to maximize node purity (Gini index).
+              <span style={{ color: '#818CF8', fontWeight: 600 }}>Algorithm Principle:</span> Splits dataset recursively based on learned threshold conditions to maximize node purity (entropy index).
             </div>
           </div>
         </div>
@@ -246,10 +244,10 @@ export const Home = () => {
       <section style={{ marginBottom: '64px' }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div className="page-badge">PROJECT METRICS</div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: '#FFFFFF', fontWeight: 700 }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--text-primary)', fontWeight: 700 }}>
             Model & Dataset Foundations
           </h2>
-          <p style={{ color: '#94A3B8', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
             Empirical baseline derived from extensive supervised training and 5-fold cross-validation.
           </p>
         </div>
@@ -269,10 +267,10 @@ export const Home = () => {
       <section style={{ marginBottom: '64px' }}>
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <div className="page-badge">STREAMLINED UNDERWRITING</div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: '#FFFFFF', fontWeight: 700 }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--text-primary)', fontWeight: 700 }}>
             How The Assessment Works
           </h2>
-          <p style={{ color: '#94A3B8', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
             A structured four-step methodology to evaluate credit default risk.
           </p>
         </div>
@@ -310,10 +308,10 @@ export const Home = () => {
                 }}>
                   <Icon size={22} color="#818CF8" />
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', color: '#FFFFFF', fontWeight: 700, marginBottom: '10px' }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: 700, marginBottom: '10px' }}>
                   {step.title}
                 </h3>
-                <p style={{ color: '#94A3B8', fontSize: '0.86rem', lineHeight: 1.5, margin: 0 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.5, margin: 0 }}>
                   {step.desc}
                 </p>
               </div>
@@ -326,10 +324,10 @@ export const Home = () => {
       <section style={{ marginBottom: '64px' }}>
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <div className="page-badge">CAPABILITIES</div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: '#FFFFFF', fontWeight: 700 }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--text-primary)', fontWeight: 700 }}>
             Comprehensive Risk Assessment Suite
           </h2>
-          <p style={{ color: '#94A3B8', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
             Tailored specifically for analytical rigor and institutional presentation.
           </p>
         </div>
@@ -356,10 +354,10 @@ export const Home = () => {
                   <Icon size={20} color="#38BDF8" />
                 </div>
                 <div>
-                  <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.02rem', color: '#FFFFFF', fontWeight: 600, marginBottom: '6px' }}>
+                  <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.02rem', color: 'var(--text-primary)', fontWeight: 600, marginBottom: '6px' }}>
                     {feat.title}
                   </h4>
-                  <p style={{ color: '#94A3B8', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
                     {feat.desc}
                   </p>
                 </div>
@@ -373,18 +371,18 @@ export const Home = () => {
       <section style={{
         padding: '24px 28px',
         borderRadius: '16px',
-        background: 'rgba(15, 23, 42, 0.75)',
-        border: '1px solid rgba(245, 158, 11, 0.3)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--warning-border)',
         display: 'flex',
         alignItems: 'center',
         gap: '20px',
-        boxShadow: '0 8px 30px rgba(0,0,0,0.3)'
+        boxShadow: 'var(--card-shadow)'
       }}>
         <div style={{
           width: '48px',
           height: '48px',
           borderRadius: '12px',
-          background: 'rgba(245, 158, 11, 0.15)',
+          background: 'var(--warning-bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -396,8 +394,8 @@ export const Home = () => {
           <h4 style={{ fontFamily: 'var(--font-heading)', color: '#FBBF24', fontSize: '0.98rem', fontWeight: 700, marginBottom: '4px' }}>
             Academic Machine Learning Notice
           </h4>
-          <p style={{ color: '#CBD5E1', fontSize: '0.86rem', lineHeight: 1.5, margin: 0 }}>
-            This application is an educational machine-learning project designed for loan default risk prediction. Predictions should be treated as decision-support information and not as the sole basis for financial decisions.
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', lineHeight: 1.5, margin: 0 }}>
+            This application is an educational machine-learning demonstration project for loan default risk prediction. Predictions are probability estimates and should not be used as the sole basis for financial decisions.
           </p>
         </div>
       </section>

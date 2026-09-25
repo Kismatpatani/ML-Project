@@ -1,0 +1,94 @@
+{
+  "model": "Decision Tree Classifier",
+  "algorithm": "DecisionTreeClassifier",
+  "train_accuracy": 0.7749085800163503,
+  "test_accuracy": 0.7743685138045819,
+  "test_precision": 0.26216400136100715,
+  "test_recall": 0.5196425560613724,
+  "test_f1": 0.34850455136540964,
+  "cv_mean_f1": 0.3381658593701258,
+  "validation_f1": 0.3381658593701258,
+  "generalization_gap": 0.0005400662117683863,
+  "roc_auc": 0.7359367826036103,
+  "pr_auc": 0.2950851581359366,
+  "threshold": 0.4700000000000001,
+  "total_records": 255347,
+  "train_samples": 204277,
+  "test_samples": 51070,
+  "test_size": 51070,
+  "default_rate_test": 0.11613471705502251,
+  "num_features": 16,
+  "features": [
+    "Age",
+    "Income",
+    "LoanAmount",
+    "CreditScore",
+    "MonthsEmployed",
+    "NumCreditLines",
+    "InterestRate",
+    "LoanTerm",
+    "DTIRatio",
+    "Education",
+    "EmploymentType",
+    "MaritalStatus",
+    "HasMortgage",
+    "HasDependents",
+    "LoanPurpose",
+    "HasCoSigner"
+  ],
+  "class_distribution": {
+    "non_default_0": 225694,
+    "default_1": 29653
+  },
+  "confusion_matrix": [
+    [
+      36465,
+      8674
+    ],
+    [
+      2849,
+      3082
+    ]
+  ],
+  "confusion_breakdown": {
+    "true_positives": 3082,
+    "false_positives": 8674,
+    "true_negatives": 36465,
+    "false_negatives": 2849
+  },
+  "classification_report": {
+    "0": {
+      "precision": 0.9275321768326805,
+      "recall": 0.807838011475664,
+      "f1-score": 0.8635572448580867,
+      "support": 45139.0
+    },
+    "1": {
+      "precision": 0.26216400136100715,
+      "recall": 0.5196425560613724,
+      "f1-score": 0.34850455136540964,
+      "support": 5931.0
+    },
+    "accuracy": 0.7743685138045819,
+    "macro avg": {
+      "precision": 0.5948480890968438,
+      "recall": 0.6637402837685182,
+      "f1-score": 0.6060308981117482,
+      "support": 51070.0
+    },
+    "weighted avg": {
+      "precision": 0.8502598320368613,
+      "recall": 0.7743685138045819,
+      "f1-score": 0.8037417460308874,
+      "support": 51070.0
+    }
+  },
+  "hyperparameters": {
+    "criterion": "entropy",
+    "max_depth": 6,
+    "min_samples_leaf": 20,
+    "min_samples_split": 50,
+    "class_weight": "{0: 1.0, 1: 5.0}",
+    "ccp_alpha": 0.0
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GitBranch, Cpu, ShieldCheck } from 'lucide-react';
 
-export const LoadingOverlay = ({ isVisible, stageText = 'Analyzing Applicant Profile...' }) => {
+export const LoadingOverlay = ({ isVisible }) => {
   const [internalStage, setInternalStage] = useState(1);
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export const LoadingOverlay = ({ isVisible, stageText = 'Analyzing Applicant Pro
       animation: 'fadeIn 0.25s ease'
     }}>
       <div style={{
-        background: 'rgba(15, 23, 42, 0.95)',
-        border: '1px solid rgba(99, 102, 241, 0.4)',
+        background: 'var(--bg-card-solid)',
+        border: '1px solid var(--border-primary)',
         borderRadius: '24px',
         padding: '40px 48px',
         maxWidth: '460px',
@@ -43,7 +43,7 @@ export const LoadingOverlay = ({ isVisible, stageText = 'Analyzing Applicant Pro
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.2)'
+        boxShadow: 'var(--card-shadow)'
       }}>
         {/* Pulsing Central Icon */}
         <div style={{
@@ -87,7 +87,7 @@ export const LoadingOverlay = ({ isVisible, stageText = 'Analyzing Applicant Pro
           fontFamily: 'var(--font-heading)',
           fontSize: '1.35rem',
           fontWeight: 700,
-          color: '#FFFFFF',
+          color: 'var(--text-primary)',
           marginBottom: '10px'
         }}>
           {internalStage === 1 ? 'Analyzing Applicant Profile...' : 'Running Decision Tree Model...'}
@@ -95,18 +95,18 @@ export const LoadingOverlay = ({ isVisible, stageText = 'Analyzing Applicant Pro
 
         <p style={{
           fontSize: '0.88rem',
-          color: '#94A3B8',
+          color: 'var(--text-muted)',
           lineHeight: 1.5,
           marginBottom: '24px'
         }}>
-          Evaluating 16 demographic and financial parameters against supervised decision rules.
+          Evaluating applicant financial parameters against Decision Tree classification rules.
         </p>
 
         {/* Progress Bar indicator */}
         <div style={{
           width: '100%',
           height: '6px',
-          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+          backgroundColor: 'var(--border-subtle)',
           borderRadius: '999px',
           overflow: 'hidden',
           marginBottom: '16px'
@@ -125,10 +125,10 @@ export const LoadingOverlay = ({ isVisible, stageText = 'Analyzing Applicant Pro
           alignItems: 'center',
           gap: '8px',
           fontSize: '0.78rem',
-          color: '#64748B'
+          color: 'var(--text-dim)'
         }}>
           <ShieldCheck size={14} color="#10B981" />
-          <span>Decision Tree Classifier (Evaluated at 80.16% test accuracy)</span>
+          <span>Decision Tree Classifier (Supervised Risk Engine)</span>
         </div>
       </div>
     </div>

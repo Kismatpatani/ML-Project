@@ -6,8 +6,7 @@ import {
   FileSpreadsheet, 
   ArrowRight, 
   AlertCircle, 
-  RotateCcw, 
-  Server
+  RotateCcw
 } from 'lucide-react';
 import { validateLoanForm } from '../utils/validators';
 import { formatCurrency } from '../utils/formatters';
@@ -21,7 +20,7 @@ export const LoanPrediction = () => {
   const { addToast } = useNotification();
   const { addAssessment } = useHistory();
 
-  // Baseline Form State covering all 16 Decision Tree features
+  // Baseline Form State covering all 16 applicant features
   const defaultValues = {
     // Card 1: Demographics
     age: 35,
@@ -57,7 +56,6 @@ export const LoanPrediction = () => {
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear error for field on change
     if (errors[field]) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -78,7 +76,6 @@ export const LoanPrediction = () => {
     e.preventDefault();
     setBackendError(null);
 
-    // Run friendly validation
     const validation = validateLoanForm(formData);
     if (!validation.isValid) {
       setErrors(validation.errors);
@@ -90,14 +87,12 @@ export const LoanPrediction = () => {
     setIsLoading(true);
 
     try {
-      // Send collected data to configurable API service
       const res = await predictionService.predict(formData);
 
       if (res.success) {
         setPredictionResult(res.data);
         setModalOpen(true);
 
-        // Record into history
         await addAssessment({
           loanAmount: formData.loanAmount,
           creditScore: formData.creditScore,
@@ -168,8 +163,8 @@ export const LoanPrediction = () => {
         <div style={{
           padding: '16px 20px',
           borderRadius: '14px',
-          background: 'rgba(244, 63, 94, 0.1)',
-          border: '1px solid rgba(244, 63, 94, 0.35)',
+          background: 'var(--danger-bg)',
+          border: '1px solid var(--danger-border)',
           marginBottom: '28px',
           display: 'flex',
           alignItems: 'center',
@@ -196,9 +191,7 @@ export const LoanPrediction = () => {
           marginBottom: '36px'
         }} className="form-two-column-grid">
 
-          {/* ========================================================
-              CARD 1 — APPLICANT DEMOGRAPHICS
-             ======================================================== */}
+          {/* CARD 1 — APPLICANT DEMOGRAPHICS */}
           <div className="glass-card" style={{ padding: '28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '14px' }}>
               <div style={{
@@ -222,10 +215,10 @@ export const LoanPrediction = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Age */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="input-age">Age (Years)</label>
-                  <span className="input-label-value">{formData.age} yrs</span>
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="input-age">Age (Years)</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>{formData.age} yrs</span>
                 </div>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <input
@@ -241,27 +234,25 @@ export const LoanPrediction = () => {
                     <button
                       type="button"
                       onClick={() => updateField('age', Math.max(18, Number(formData.age) - 1))}
-                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-light)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
+                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
                     >
                       -
                     </button>
                     <button
                       type="button"
                       onClick={() => updateField('age', Math.min(100, Number(formData.age) + 1))}
-                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-light)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
+                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
                     >
                       +
                     </button>
                   </div>
                 </div>
-                {errors.age && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.age}</span></div>}
+                {errors.age && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.age}</span></div>}
               </div>
 
               {/* Education Level */}
-              <div>
-                <div className="input-label">
-                  <label>Education Level</label>
-                </div>
+              <div className="input-group">
+                <label className="input-label">Education Level</label>
                 <div className="segmented-group">
                   {['High School', "Bachelor's", "Master's", 'PhD'].map((level) => (
                     <button
@@ -274,14 +265,12 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.education && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.education}</span></div>}
+                {errors.education && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.education}</span></div>}
               </div>
 
               {/* Marital Status */}
-              <div>
-                <div className="input-label">
-                  <label>Marital Status</label>
-                </div>
+              <div className="input-group">
+                <label className="input-label">Marital Status</label>
                 <div className="segmented-group">
                   {['Single', 'Married', 'Divorced'].map((status) => (
                     <button
@@ -294,14 +283,12 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.maritalStatus && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.maritalStatus}</span></div>}
+                {errors.maritalStatus && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.maritalStatus}</span></div>}
               </div>
 
               {/* Has Dependents */}
-              <div>
-                <div className="input-label">
-                  <label>Has Dependents?</label>
-                </div>
+              <div className="input-group">
+                <label className="input-label">Has Dependents?</label>
                 <div className="segmented-group">
                   {['No', 'Yes'].map((val) => (
                     <button
@@ -314,14 +301,12 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.hasDependents && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.hasDependents}</span></div>}
+                {errors.hasDependents && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.hasDependents}</span></div>}
               </div>
             </div>
           </div>
 
-          {/* ========================================================
-              CARD 2 — FINANCIAL PROFILE
-             ======================================================== */}
+          {/* CARD 2 — FINANCIAL PROFILE */}
           <div className="glass-card" style={{ padding: '28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '14px' }}>
               <div style={{
@@ -344,11 +329,11 @@ export const LoanPrediction = () => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* Annual Income (Slider + Value) */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="slider-income">Annual Income</label>
-                  <span className="input-label-value">{formatCurrency(formData.income)}</span>
+              {/* Annual Income */}
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="slider-income">Annual Income</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>{formatCurrency(formData.income)}</span>
                 </div>
                 <input
                   id="slider-income"
@@ -356,23 +341,23 @@ export const LoanPrediction = () => {
                   min="15000"
                   max="250000"
                   step="2500"
-                  className="range-slider"
+                  style={{ width: '100%', accentColor: '#6366F1' }}
                   value={formData.income}
                   onChange={(e) => updateField('income', Number(e.target.value))}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748B' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                   <span>$15,000</span>
                   <span>$125,000</span>
                   <span>$250,000+</span>
                 </div>
-                {errors.income && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.income}</span></div>}
+                {errors.income && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.income}</span></div>}
               </div>
 
-              {/* Credit Score (Slider + Value) */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="slider-credit-score">Credit Score</label>
-                  <span className="input-label-value" style={{ color: formData.creditScore >= 700 ? '#10B981' : formData.creditScore >= 600 ? '#F59E0B' : '#F43F5E' }}>
+              {/* Credit Score */}
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="slider-credit-score">Credit Score</label>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: formData.creditScore >= 700 ? '#10B981' : formData.creditScore >= 600 ? '#F59E0B' : '#F43F5E' }}>
                     {formData.creditScore} {formData.creditScore >= 720 ? '(Excellent)' : formData.creditScore >= 660 ? '(Good)' : formData.creditScore >= 600 ? '(Fair)' : '(Subprime)'}
                   </span>
                 </div>
@@ -382,24 +367,24 @@ export const LoanPrediction = () => {
                   min="300"
                   max="850"
                   step="5"
-                  className="range-slider"
+                  style={{ width: '100%', accentColor: '#6366F1' }}
                   value={formData.creditScore}
                   onChange={(e) => updateField('creditScore', Number(e.target.value))}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748B' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                   <span>300 (Poor)</span>
                   <span>580</span>
                   <span>670</span>
                   <span>850 (Exceptional)</span>
                 </div>
-                {errors.creditScore && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.creditScore}</span></div>}
+                {errors.creditScore && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.creditScore}</span></div>}
               </div>
 
-              {/* Debt-to-Income Ratio (Slider + Value) */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="slider-dti">Debt-to-Income Ratio (DTI)</label>
-                  <span className="input-label-value">
+              {/* Debt-to-Income Ratio */}
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="slider-dti">Debt-to-Income Ratio (DTI)</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>
                     {Math.round(formData.dtiRatio * 100)}% ({formData.dtiRatio})
                   </span>
                 </div>
@@ -409,23 +394,21 @@ export const LoanPrediction = () => {
                   min="0.05"
                   max="0.95"
                   step="0.01"
-                  className="range-slider"
+                  style={{ width: '100%', accentColor: '#6366F1' }}
                   value={formData.dtiRatio}
                   onChange={(e) => updateField('dtiRatio', parseFloat(e.target.value))}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748B' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                   <span>5% (Low Debt)</span>
                   <span>36% (Standard)</span>
                   <span>95% (Extreme Debt)</span>
                 </div>
-                {errors.dtiRatio && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.dtiRatio}</span></div>}
+                {errors.dtiRatio && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.dtiRatio}</span></div>}
               </div>
 
               {/* Has Mortgage */}
-              <div>
-                <div className="input-label">
-                  <label>Has Mortgage?</label>
-                </div>
+              <div className="input-group">
+                <label className="input-label">Has Mortgage?</label>
                 <div className="segmented-group">
                   {['No', 'Yes'].map((val) => (
                     <button
@@ -438,14 +421,12 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.hasMortgage && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.hasMortgage}</span></div>}
+                {errors.hasMortgage && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.hasMortgage}</span></div>}
               </div>
             </div>
           </div>
 
-          {/* ========================================================
-              CARD 3 — EMPLOYMENT DETAILS
-             ======================================================== */}
+          {/* CARD 3 — EMPLOYMENT DETAILS */}
           <div className="glass-card" style={{ padding: '28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '14px' }}>
               <div style={{
@@ -469,10 +450,8 @@ export const LoanPrediction = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Employment Type */}
-              <div>
-                <div className="input-label">
-                  <label>Employment Type</label>
-                </div>
+              <div className="input-group">
+                <label className="input-label">Employment Type</label>
                 <div className="segmented-group">
                   {['Full-time', 'Part-time', 'Self-employed', 'Unemployed'].map((type) => (
                     <button
@@ -485,14 +464,14 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.employmentType && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.employmentType}</span></div>}
+                {errors.employmentType && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.employmentType}</span></div>}
               </div>
 
-              {/* Months Employed (Stepper + Input) */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="input-months-employed">Months Employed</label>
-                  <span className="input-label-value">
+              {/* Months Employed */}
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="input-months-employed">Months Employed</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>
                     {formData.monthsEmployed} mos ({(formData.monthsEmployed / 12).toFixed(1)} yrs)
                   </span>
                 </div>
@@ -510,27 +489,27 @@ export const LoanPrediction = () => {
                     <button
                       type="button"
                       onClick={() => updateField('monthsEmployed', Math.max(0, Number(formData.monthsEmployed) - 6))}
-                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-light)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
+                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
                     >
                       -6m
                     </button>
                     <button
                       type="button"
                       onClick={() => updateField('monthsEmployed', Number(formData.monthsEmployed) + 6)}
-                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-light)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
+                      style={{ padding: '10px 14px', background: 'var(--bg-segmented)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', borderRadius: '8px', cursor: 'pointer' }}
                     >
                       +6m
                     </button>
                   </div>
                 </div>
-                {errors.monthsEmployed && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.monthsEmployed}</span></div>}
+                {errors.monthsEmployed && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.monthsEmployed}</span></div>}
               </div>
 
               {/* Active Credit Lines */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="input-credit-lines">Number of Active Credit Lines</label>
-                  <span className="input-label-value">{formData.numCreditLines} open lines</span>
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="input-credit-lines">Number of Active Credit Lines</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>{formData.numCreditLines} open lines</span>
                 </div>
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                   {[1, 2, 3, 4, 5, 6, 8, 10, 15].map((cnt) => (
@@ -545,14 +524,12 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.numCreditLines && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.numCreditLines}</span></div>}
+                {errors.numCreditLines && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.numCreditLines}</span></div>}
               </div>
             </div>
           </div>
 
-          {/* ========================================================
-              CARD 4 — LOAN PARAMETERS
-             ======================================================== */}
+          {/* CARD 4 — LOAN PARAMETERS */}
           <div className="glass-card" style={{ padding: '28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '14px' }}>
               <div style={{
@@ -576,10 +553,10 @@ export const LoanPrediction = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Loan Amount */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="slider-loan-amount">Requested Loan Amount</label>
-                  <span className="input-label-value">{formatCurrency(formData.loanAmount)}</span>
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="slider-loan-amount">Requested Loan Amount</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>{formatCurrency(formData.loanAmount)}</span>
                 </div>
                 <input
                   id="slider-loan-amount"
@@ -587,23 +564,23 @@ export const LoanPrediction = () => {
                   min="2000"
                   max="150000"
                   step="1000"
-                  className="range-slider"
+                  style={{ width: '100%', accentColor: '#6366F1' }}
                   value={formData.loanAmount}
                   onChange={(e) => updateField('loanAmount', Number(e.target.value))}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748B' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                   <span>$2,000</span>
                   <span>$75,000</span>
                   <span>$150,000</span>
                 </div>
-                {errors.loanAmount && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.loanAmount}</span></div>}
+                {errors.loanAmount && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.loanAmount}</span></div>}
               </div>
 
               {/* Interest Rate */}
-              <div>
-                <div className="input-label">
-                  <label htmlFor="slider-interest-rate">Interest Rate (%)</label>
-                  <span className="input-label-value">{formData.interestRate}% APR</span>
+              <div className="input-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <label className="input-label" htmlFor="slider-interest-rate">Interest Rate (%)</label>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--cyan-light)', fontWeight: 600 }}>{formData.interestRate}% APR</span>
                 </div>
                 <input
                   id="slider-interest-rate"
@@ -611,23 +588,21 @@ export const LoanPrediction = () => {
                   min="2.0"
                   max="32.0"
                   step="0.5"
-                  className="range-slider"
+                  style={{ width: '100%', accentColor: '#6366F1' }}
                   value={formData.interestRate}
                   onChange={(e) => updateField('interestRate', parseFloat(e.target.value))}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748B' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                   <span>2.0%</span>
                   <span>15.0%</span>
                   <span>32.0%</span>
                 </div>
-                {errors.interestRate && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.interestRate}</span></div>}
+                {errors.interestRate && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.interestRate}</span></div>}
               </div>
 
               {/* Loan Term */}
-              <div>
-                <div className="input-label">
-                  <label>Loan Term (Duration)</label>
-                </div>
+              <div className="input-group">
+                <label className="input-label">Loan Term (Duration)</label>
                 <div className="segmented-group">
                   {[12, 24, 36, 48, 60].map((term) => (
                     <button
@@ -640,15 +615,13 @@ export const LoanPrediction = () => {
                     </button>
                   ))}
                 </div>
-                {errors.loanTerm && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.loanTerm}</span></div>}
+                {errors.loanTerm && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.loanTerm}</span></div>}
               </div>
 
-              {/* Loan Purpose & Has Co-Signer (Side-by-side) */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <div className="input-label">
-                    <label htmlFor="select-purpose">Loan Purpose</label>
-                  </div>
+              {/* Loan Purpose & Has Co-Signer */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+                <div className="input-group">
+                  <label className="input-label" htmlFor="select-purpose">Loan Purpose</label>
                   <select
                     id="select-purpose"
                     className={`select-input ${errors.loanPurpose ? 'input-error' : ''}`}
@@ -661,13 +634,11 @@ export const LoanPrediction = () => {
                     <option value="Home">Home Improvement</option>
                     <option value="Personal">Personal</option>
                   </select>
-                  {errors.loanPurpose && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.loanPurpose}</span></div>}
+                  {errors.loanPurpose && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.loanPurpose}</span></div>}
                 </div>
 
-                <div>
-                  <div className="input-label">
-                    <label>Has Co-Signer?</label>
-                  </div>
+                <div className="input-group">
+                  <label className="input-label">Has Co-Signer?</label>
                   <div className="segmented-group">
                     {['No', 'Yes'].map((val) => (
                       <button
@@ -680,14 +651,14 @@ export const LoanPrediction = () => {
                       </button>
                     ))}
                   </div>
-                  {errors.hasCoSigner && <div className="field-error-text"><AlertCircle size={13} /><span>{errors.hasCoSigner}</span></div>}
+                  {errors.hasCoSigner && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><AlertCircle size={13} /><span>{errors.hasCoSigner}</span></div>}
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Large Premium Bottom Button */}
+        {/* Submit Button */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -710,8 +681,8 @@ export const LoanPrediction = () => {
             <span>Predict Default Risk</span>
             <ArrowRight size={22} />
           </button>
-          <span style={{ fontSize: '0.8rem', color: '#64748B' }}>
-            Submits 16 features to the Decision Tree classification service
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            Submits 16 applicant features to the Decision Tree classification service
           </span>
         </div>
       </form>

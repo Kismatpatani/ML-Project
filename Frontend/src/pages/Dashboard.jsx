@@ -30,12 +30,12 @@ export const Dashboard = () => {
           <div className="page-badge">INSTITUTIONAL METRICS</div>
           <h1 className="page-title">Risk Analysis Dashboard</h1>
           <p className="page-subtitle">
-            Monitor loan risk assessments and prediction activity.
+            Monitor loan risk assessments and Decision Tree prediction activity.
           </p>
         </div>
 
         {/* Action Controls: New Assessment & Demo Data Switcher */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           <button
             onClick={() => setIsDemoMode(!isDemoMode)}
             style={{
@@ -44,9 +44,9 @@ export const Dashboard = () => {
               gap: '8px',
               padding: '10px 16px',
               borderRadius: '10px',
-              background: isDemoMode ? 'rgba(245, 158, 11, 0.15)' : 'rgba(255, 255, 255, 0.05)',
-              border: `1px solid ${isDemoMode ? 'rgba(245, 158, 11, 0.4)' : 'rgba(255, 255, 255, 0.12)'}`,
-              color: isDemoMode ? '#FBBF24' : '#CBD5E1',
+              background: isDemoMode ? 'var(--warning-bg)' : 'var(--bg-card)',
+              border: `1px solid ${isDemoMode ? 'var(--warning-border)' : 'var(--border-subtle)'}`,
+              color: isDemoMode ? '#FBBF24' : 'var(--text-secondary)',
               fontSize: '0.85rem',
               fontWeight: 600,
               cursor: 'pointer'
@@ -68,14 +68,14 @@ export const Dashboard = () => {
         <div style={{
           padding: '12px 18px',
           borderRadius: '12px',
-          background: 'rgba(245, 158, 11, 0.12)',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
+          background: 'var(--warning-bg)',
+          border: '1px solid var(--warning-border)',
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
           marginBottom: '28px',
           fontSize: '0.85rem',
-          color: '#FEF3C7'
+          color: 'var(--text-primary)'
         }}>
           <AlertTriangle size={18} color="#F59E0B" style={{ flexShrink: 0 }} />
           <span>
@@ -107,10 +107,10 @@ export const Dashboard = () => {
           }}>
             <Database size={30} color="#818CF8" />
           </div>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '8px' }}>
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
             No Assessments Performed Yet
           </h3>
-          <p style={{ color: '#94A3B8', fontSize: '0.92rem', maxWidth: '480px', lineHeight: 1.6, marginBottom: '24px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', maxWidth: '480px', lineHeight: 1.6, marginBottom: '24px' }}>
             Live assessment metrics will populate here automatically as loan evaluations are processed by the Decision Tree model.
           </p>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -172,7 +172,7 @@ export const Dashboard = () => {
             {/* Chart 1: Default vs No Default Distribution */}
             <div className="glass-card dash-col-4" style={{ gridColumn: 'span 4', padding: '24px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 600, color: '#FFFFFF', margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
                   Classification Distribution
                 </h3>
                 <span className="badge-model">Target (0/1)</span>
@@ -186,10 +186,10 @@ export const Dashboard = () => {
             {/* Chart 2: Risk Categorization */}
             <div className="glass-card dash-col-4" style={{ gridColumn: 'span 4', padding: '24px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 600, color: '#FFFFFF', margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
                   Risk Distribution
                 </h3>
-                <span style={{ fontSize: '0.78rem', color: '#94A3B8' }}>Severity tiers</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Severity tiers</span>
               </div>
               <RiskBarChart
                 low={stats.noDefaultCount}
@@ -201,10 +201,10 @@ export const Dashboard = () => {
             {/* Chart 3: Prediction Activity */}
             <div className="glass-card dash-col-4" style={{ gridColumn: 'span 4', padding: '24px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 600, color: '#FFFFFF', margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
                   Prediction Activity
                 </h3>
-                <span style={{ fontSize: '0.78rem', color: '#94A3B8' }}>Recent velocity</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Recent velocity</span>
               </div>
               <ActivityChart assessments={history} />
             </div>
@@ -214,12 +214,12 @@ export const Dashboard = () => {
           <div className="glass-card" style={{ padding: '24px', overflowX: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                   Recent Predictions
                 </h3>
-                <span style={{ fontSize: '0.8rem', color: '#94A3B8' }}>Last processed applicant profiles</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Last processed applicant profiles</span>
               </div>
-              <Link to="/history" style={{ color: '#38BDF8', fontSize: '0.85rem', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Link to="/history" style={{ color: 'var(--cyan-light)', fontSize: '0.85rem', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span>View Full History</span>
                 <ArrowRight size={14} />
               </Link>
@@ -227,7 +227,7 @@ export const Dashboard = () => {
 
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.86rem', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', color: '#94A3B8' }}>
+                <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '12px 14px' }}>Assessment ID</th>
                   <th style={{ padding: '12px 14px' }}>Date</th>
                   <th style={{ padding: '12px 14px' }}>Loan Amount</th>
@@ -238,7 +238,7 @@ export const Dashboard = () => {
               </thead>
               <tbody>
                 {history.slice(0, 5).map((item) => (
-                  <tr key={item.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', color: '#E2E8F0' }}>
+                  <tr key={item.id} style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}>
                     <td style={{ padding: '12px 14px', fontFamily: 'monospace', color: '#818CF8' }}>{item.id}</td>
                     <td style={{ padding: '12px 14px' }}>{formatDate(item.date)}</td>
                     <td style={{ padding: '12px 14px', fontWeight: 600 }}>{formatCurrency(item.loanAmount)}</td>
